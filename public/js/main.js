@@ -31,7 +31,7 @@ $('.delete').on('click', function(e) {
 $('.removeAll').on('click', function(e) {
 
   var id =  []
-  $('.grey').find('input').each(function() {
+  $('.selected').find('input').each(function() {
     id.push( this.value )
   })
  
@@ -50,27 +50,29 @@ $('.removeAll').on('click', function(e) {
 
 $('.list-group-item').on('click', function(e){
   e.preventDefault()
-  $(this).toggleClass('grey')
+  $(this).toggleClass('selected')
   
 })
 
 $('.taskItem').on('click', function(e){
   e.preventDefault()
+   // $(".list-group-item").off("click");
    $(this).toggleClass('hidden')
-   $(this).siblings('input').toggleClass('hidden')
+   $(this).siblings('input').toggleClass('hidden').focus()
 })
 
 
 $('.inpTask').keypress(function (e) {
   if (e.which == 13) {
+    // $(".list-group-item").on("click");
     $(this).siblings('.taskItem').text(this.value);
     $(this).toggleClass('hidden')
     $(this).siblings('.taskItem').toggleClass('hidden')
 
     const $input = e.target.parentElement.children[1].value
     const idPath = e.target.parentNode.childNodes[2].children[0].value
-    console.log(e.target.parentNode.childNodes[2].children[0].value)
     console.log($input)
+    console.log(idPath)
     $.ajax({
     url: '/todo-list/' + idPath,
     method: 'PUT',

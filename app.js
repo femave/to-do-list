@@ -2,6 +2,7 @@ const express = require('express')
 const path = require('path')
 const bodyParser = require('body-parser')
 const strftime = require('strftime')
+const router = express.Router()
 const app = express()
 
 app.set('view engine', 'pug')
@@ -32,7 +33,7 @@ app.post('/todo-list', (req,res)=>{
 	tasks.push({
     id: counter ++,
     task: req.body.task,
-    time: '(Created at' + strftime('%F %T') + ')',
+    time: '(Created at ' + strftime('%F %T') + ')',
     default: false
   })
   	res.redirect('/')

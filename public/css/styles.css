@@ -1,3 +1,10 @@
-.grey {
+.selected {
 	background-color: grey;
+}
+.taskItem{
+	width:30%;
+	display: inline-block;
+}
+.pull-right{
+	margin-top: -15px;
 }
