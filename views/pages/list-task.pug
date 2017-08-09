@@ -17,17 +17,19 @@ block content
 
           fieldset    
             .input-group
-              input.form-control(name='task' type='text', placeholder='To Do...')
+              input.form-control(name='task' type='text', placeholder='To Do...', autofocus)
               span.input-group-btn
                 button.btn.btn-default ToDo!
 
         h3 List
-        ol
+        ul.list-group
           each task in tasks
-            li= task.task
+            li.list-group-item
+              p.taskItem= task.task
+              input.hidden.inpTask(value=task.task)
               p= task.time
-                input.hidden(value=task.id)
-                button.remove Done task
-                button.delete Delete task
+                input.hidden.taskId(value=task.id)
+                button.remove.btn-primary.pull-right Done task
+                button.delete.btn-danger.pull-right Delete task
         button.removeAll Done all list
               

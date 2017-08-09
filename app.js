@@ -32,32 +32,47 @@ app.post('/todo-list', (req,res)=>{
 	tasks.push({
     id: counter ++,
     task: req.body.task,
-    time: '(Created at' + strftime('%F %T') + ')'
+    time: '(Created at' + strftime('%F %T') + ')',
+    default: false
   })
   	res.redirect('/')
 })
 
 app.put('/todo-list/:position', (req,res) => {
-  console.log("asd")
   let idPos = req.params.position
-  for (var i = 0; i < tasks.length; i++){
-    if(tasks[i].id == idPos){
-      console.log(tasks[i])
-      complete.push(tasks[i])
-      tasks.splice(i,1)
+  let data = req.body.task
+    console.log(data)
+  if(data){
+    for (var i = 0; i < tasks.length; i++){
+      if(tasks[i].id == idPos){
+        const id = tasks[i].id
+        const time = tasks[i].time
+        tasks.push({
+          id: id,
+          time: time,
+          task: data
+        })
+        tasks.splice(i,1)
+      }
+    }
+  }else {
+    for (var i = 0; i < tasks.length; i++){
+      if(tasks[i].id == idPos){
+        console.log(tasks[i])
+        complete.push(tasks[i])
+        tasks.splice(i,1)
+      }
     }
   }
+  
 
   res.status(200).send("todo ha ido ok")
 })
 
 app.delete('/todo-list-delete/:position', (req,res) => {
   let idPos = req.params.position
-  console.log(idPos)
   for(var i = 0; i < tasks.length; i++){
-    console.log("comingin")
     if(tasks[i].id == idPos){
-      console.log(tasks[i])
       tasks.splice(i,1)
     }
   }
@@ -65,11 +80,16 @@ app.delete('/todo-list-delete/:position', (req,res) => {
   res.status(200).send("todo ha ido ok")
 })
 
-app.put('/deleteAll', (req,res) => {
-  tasks.forEach(function(task){
-  	complete.push(task)
-  })
-  tasks.splice(0, tasks.length)
+app.put('/deleteAll/:position', (req,res) => {
+  let idPos = req.params.position.split(',')
+  for(let j = 0; j < idPos.length; j++){
+    for(let i = 0; i < tasks.length; i++){
+      if(tasks[i].id == idPos[j]){
+        complete.push(tasks[i])
+        tasks.splice(i,1)
+      }
+    }
+  } 
   res.status(200).send("todo ha ido ok")
 })
 
