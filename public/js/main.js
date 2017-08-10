@@ -14,10 +14,10 @@ $('.remove').on('click', function(e) {
 
 $('.delete').on('click', function(e) {
   const $input = $(this).siblings('input')
-  const positionCountry = $input.val()
-
+  const posId = $input.val()
+  console.log($input +' '+posId)
   $.ajax({
-    url: '/todo-list-delete/' + positionCountry,
+    url: '/todo-list-delete/' + posId,
     method: 'DELETE'
   })
   .then( data => {
@@ -31,7 +31,7 @@ $('.delete').on('click', function(e) {
 $('.removeAll').on('click', function(e) {
 
   var id =  []
-  $('.selected').find('input').each(function() {
+  $('.selected').find('.taskId').each(function() {
     id.push( this.value )
   })
  
